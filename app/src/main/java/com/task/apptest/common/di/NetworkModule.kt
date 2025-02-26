@@ -3,7 +3,7 @@ import com.task.apptest.data.remote.ApiService
 import com.task.apptest.data.remote.ssl.getUnsafeOkHttpClient
 import com.task.apptest.common.utils.Api
 import com.task.apptest.data.local.TodoDao
-import com.task.apptest.presentation.all_todo.TodoRepository
+import com.task.apptest.data.repository.TodoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

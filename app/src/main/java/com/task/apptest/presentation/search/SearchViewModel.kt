@@ -3,7 +3,7 @@ package com.task.apptest.presentation.search
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.task.apptest.domain.model.Todo
-import com.task.apptest.presentation.all_todo.TodoRepository
+import com.task.apptest.data.repository.TodoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
