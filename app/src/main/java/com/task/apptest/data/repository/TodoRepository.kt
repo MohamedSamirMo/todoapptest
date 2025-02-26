@@ -28,7 +28,7 @@ class TodoRepository @Inject constructor(
                     response.body()?.let { todos ->
                         val entities = todos.map { it.toEntity() }
                         todoDao.insertTodos(entities)
-                        return@withContext getTodos(page, pageSize)
+                        return@withContext getTodos(page, pageSize)  // جلب التو-دوس من القاعدة بعد التخزين
                     }
                 }
             } catch (e: Exception) {

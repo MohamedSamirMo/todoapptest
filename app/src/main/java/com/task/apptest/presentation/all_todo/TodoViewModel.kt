@@ -24,13 +24,11 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
 
     fun fetchTodos(hasInternet: Boolean) {
         viewModelScope.launch {
-            val cachedTodos = repository.getTodos(page, pageSize)
-            _todos.value += cachedTodos
-
             if (hasInternet) {
-                val newTodos = repository.fetchAndStoreTodos(page, pageSize)
-                _todos.value += newTodos
+                repository.fetchAndStoreTodos(page, pageSize)
             }
+            val newTodos = repository.getTodos(page, pageSize)
+            _todos.value += newTodos
             page++
         }
     }

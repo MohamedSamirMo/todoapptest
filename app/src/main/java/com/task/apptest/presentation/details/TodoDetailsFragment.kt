@@ -1,4 +1,4 @@
-package com.task.apptest.presentation.description
+package com.task.apptest.presentation.details
 
 import android.os.Bundle
 import android.view.View

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.task.apptest.R
 import com.task.apptest.common.utils.enableEdgeToEdge
 import com.task.apptest.databinding.FragmentTodoBinding
-import com.task.apptest.presentation.description.TodoDetailsFragment.Companion.TODO_ID
+import com.task.apptest.presentation.details.TodoDetailsFragment.Companion.TODO_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 @AndroidEntryPoint

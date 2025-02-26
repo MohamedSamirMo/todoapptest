@@ -19,7 +19,7 @@
     </fragment>
     <fragment
         android:id="@+id/todoDetailsFragment"
-        android:name="com.task.apptest.presentation.description.TodoDetailsFragment"
+        android:name="com.task.apptest.presentation.details.TodoDetailsFragment"
         android:label="TodoDetailsFragment"
         tools:layout="@layout/fragment_todo_details" />
     <fragment
