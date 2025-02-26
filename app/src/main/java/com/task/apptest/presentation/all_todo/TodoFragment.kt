@@ -46,7 +46,6 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
             binding.tvNoInternetConnection.visibility = View.GONE
             viewModel.fetchTodos()
         } else {
-            binding.tvNoInternetConnection.visibility = View.VISIBLE
             binding.rvTodos.visibility = View.GONE
             binding.shimmerViewContainer.visibility = View.GONE
         }
@@ -76,17 +75,20 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
     }
 
     private fun observeTodos() {
-        lifecycleScope.launch {
+      viewLifecycleOwner.lifecycleScope.launch {
             viewModel.todos.collect { todos ->
                 if (todos.isNotEmpty()) {
                     binding.tvNoInternetConnection.visibility = View.GONE
                     binding.shimmerViewContainer.stopShimmer()
                     binding.shimmerViewContainer.visibility = View.GONE
                     binding.rvTodos.visibility = View.VISIBLE
+                } else if (!isInternetAvailable(requireContext())) {
+                    binding.tvNoInternetConnection.visibility = View.VISIBLE
                 }
                 todoAdapter.updateTodos(todos)
             }
         }
+
     }
 
     private fun bindAppBar() {
@@ -132,8 +134,9 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
             override fun onLost(network: Network) {
                 requireActivity().runOnUiThread {
                     binding.tvNoInternetConnection.visibility = View.VISIBLE
-                    binding.rvTodos.visibility = View.GONE
+                    binding.shimmerViewContainer.stopShimmer()
                     binding.shimmerViewContainer.visibility = View.GONE
+
                 }
             }
         })

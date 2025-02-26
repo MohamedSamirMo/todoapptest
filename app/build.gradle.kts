@@ -5,6 +5,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("androidx.navigation.safeargs")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -53,9 +54,6 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-
-    // paging3
-    implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
     //shimmer
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
 
@@ -69,11 +67,9 @@ dependencies {
     // LiveData test utilities
     testImplementation (libs.androidx.core.testing)
     implementation (libs.androidx.room.runtime)
-    kapt (libs.androidx.room.compiler)
 
     implementation(libs.androidx.room.runtime)
     // To use Kotlin annotation processing tool (kapt)
-    kapt(libs.androidx.room.compiler)
     implementation (libs.androidx.cardview)
 
     implementation(libs.androidx.room.runtime)
@@ -101,6 +97,8 @@ dependencies {
     implementation(libs.ssp.android)
     //OKHttp
     implementation (libs.logging.interceptor)
+    ksp(libs.androidx.room.compiler)
+
 }
 kapt{
     correctErrorTypes = true

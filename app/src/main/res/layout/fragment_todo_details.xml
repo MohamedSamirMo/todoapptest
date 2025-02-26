@@ -193,21 +193,4 @@
                 tools:checked="false" />
         </LinearLayout>
     </LinearLayout>
-
-    <com.google.android.material.textview.MaterialTextView
-        android:id="@+id/tvNoInternetConnection"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawablePadding="@dimen/_20sdp"
-        android:layout_marginHorizontal="@dimen/_12sdp"
-        android:layout_marginVertical="@dimen/_12ssp"
-        android:gravity="center"
-        android:text="@string/no_internet"
-        app:layout_constraintBottom_toBottomOf="parent"
-        android:textAlignment="center"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/_18ssp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/appBar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

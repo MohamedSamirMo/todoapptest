@@ -30,7 +30,7 @@ class TodoDetailsFragment : Fragment(R.layout.fragment_todo_details) {
     }
 
     private fun observeTodoDetails() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             binding.shimmerViewContainer.startShimmer()
             binding.shimmerViewContainer.visibility = View.VISIBLE
 

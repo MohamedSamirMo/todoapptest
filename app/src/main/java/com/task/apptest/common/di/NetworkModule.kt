@@ -2,6 +2,8 @@ package com.task.apptest.common.di
 import com.task.apptest.data.remote.ApiService
 import com.task.apptest.data.remote.ssl.getUnsafeOkHttpClient
 import com.task.apptest.common.utils.Api
+import com.task.apptest.data.local.TodoDao
+import com.task.apptest.presentation.all_todo.TodoRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -29,5 +31,10 @@ object NetworkModule {
     @Singleton
     fun provideApiService(retrofit: Retrofit): ApiService {
         return retrofit.create(ApiService::class.java)
+    }
+    @Provides
+    @Singleton
+    fun provideTodoRepository(apiService: ApiService, todoDao: TodoDao): TodoRepository {
+        return TodoRepository(apiService, todoDao)
     }
 }

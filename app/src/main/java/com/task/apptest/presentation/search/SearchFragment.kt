@@ -56,7 +56,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     }
 
     private fun observeSearchResults() {
-        lifecycleScope.launch {
+        viewLifecycleOwner.lifecycleScope.launch {
             viewModel.searchResults.collect { todos ->
                 todoAdapter.updateTodos(todos)
             }

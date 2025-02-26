@@ -18,13 +18,11 @@ class SearchViewModel @Inject constructor(private val repository: TodoRepository
 
     fun searchTodos(query: String) {
         viewModelScope.launch {
-            if (query.isBlank()) {
-                _searchResults.emit(emptyList())
+            _searchResults.value = if (query.isBlank()) {
+                emptyList()
             } else {
-                val response = repository.searchTodos(query)
-                if (response.isSuccessful) {
-                    response.body()?.let { _searchResults.emit(it) }
-                }
+                val results = repository.searchTodos(query)
+                results
             }
         }
     }
