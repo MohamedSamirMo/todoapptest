@@ -13,26 +13,28 @@ class TodoRepository @Inject constructor(
     private val apiService: ApiService,
     private val todoDao: TodoDao
 ) {
-
-    suspend fun getTodos(): List<Todo> = withContext(Dispatchers.IO) {
-        return@withContext todoDao.getAllTodos().toTodoList()
+    suspend fun getTodos(page: Int, pageSize: Int): List<Todo> = withContext(Dispatchers.IO) {
+        val startIndex = (page - 1) * pageSize
+        todoDao.getAllTodos()
+            .toTodoList()
+            .drop(startIndex)
+            .take(pageSize)
     }
-
-    suspend fun fetchAndStoreTodos(): List<Todo> {
+    suspend fun fetchAndStoreTodos(page: Int, pageSize: Int): List<Todo> {
         return withContext(Dispatchers.IO) {
             try {
                 val response = apiService.getTodos()
                 if (response.isSuccessful) {
                     response.body()?.let { todos ->
                         val entities = todos.map { it.toEntity() }
-                        todoDao.insertTodos(entities) // تخزين البيانات الجديدة في Room
-                        return@withContext getTodos()
+                        todoDao.insertTodos(entities)
+                        return@withContext getTodos(page, pageSize)
                     }
                 }
             } catch (e: Exception) {
                 e.printStackTrace()
             }
-            return@withContext getTodos() // في حالة الفشل، نرجع البيانات من Room
+            return@withContext getTodos(page, pageSize)
         }
     }
 

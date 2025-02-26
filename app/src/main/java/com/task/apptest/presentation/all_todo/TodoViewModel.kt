@@ -18,14 +18,19 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
     private val _todoDetails = MutableStateFlow<Todo?>(null)
     val todoDetails = _todoDetails.asStateFlow()
 
+    private var page = 1
+    private val pageSize = 5
+
     fun fetchTodos(hasInternet: Boolean) {
         viewModelScope.launch {
-            val cachedTodos = repository.getTodos()
-            _todos.value = cachedTodos
+            val cachedTodos = repository.getTodos(page, pageSize)
+            _todos.value += cachedTodos
+
             if (hasInternet) {
-                val newTodos = repository.fetchAndStoreTodos()
-                _todos.value = newTodos
+                val newTodos = repository.fetchAndStoreTodos(page, pageSize)
+                _todos.value += newTodos
             }
+            page++
         }
     }
 

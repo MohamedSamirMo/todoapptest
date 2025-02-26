@@ -12,13 +12,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.task.apptest.R
 import com.task.apptest.common.utils.enableEdgeToEdge
 import com.task.apptest.databinding.FragmentTodoBinding
 import com.task.apptest.presentation.description.TodoDetailsFragment.Companion.TODO_ID
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-
 @AndroidEntryPoint
 class TodoFragment : Fragment(R.layout.fragment_todo) {
 
@@ -51,7 +51,7 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
             binding.tvNoInternetConnection.visibility = View.VISIBLE
         }
 
-        viewModel.fetchTodos(isConnected) // إرسال حالة الإنترنت للـ ViewModel
+        viewModel.fetchTodos(isConnected)
     }
 
     private fun setupRecyclerView() {
@@ -60,7 +60,17 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
         binding.rvTodos.apply {
             this.layoutManager = layoutManager
             adapter = todoAdapter
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    super.onScrolled(recyclerView, dx, dy)
+                    if (layoutManager.findLastVisibleItemPosition() == todoAdapter.itemCount - 1) {
+                        viewModel.fetchTodos(isInternetAvailable(requireContext()))
+                    }
+                }
+            })
         }
+
         todoAdapter.setOnItemClickListener { todo ->
             val bundle = Bundle().apply {
                 putInt(TODO_ID, todo)
@@ -68,7 +78,6 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
             findNavController().navigate(R.id.action_todoFragment_to_todoDetailsFragment, bundle)
         }
     }
-
     private fun observeTodos() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.todos.collect { todos ->
@@ -88,16 +97,11 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
     private fun bindAppBar() {
         binding.appBar.tvScreenTitle.text = getString(R.string.todos)
         binding.appBar.btnBack.setOnClickListener {
-            activity?.onBackPressedDispatcher?.onBackPressed()
+            findNavController().popBackStack()
         }
         binding.appBar.btnSearch.setOnClickListener {
             findNavController().navigate(R.id.action_todoFragment_to_searchFragment)
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
 
@@ -122,7 +126,7 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
                     binding.tvNoInternetConnection.visibility = View.GONE
                     binding.rvTodos.visibility = View.VISIBLE
                     binding.shimmerViewContainer.startShimmer()
-                    viewModel.fetchTodos(true) // تحميل البيانات الجديدة عند عودة الإنترنت
+                    viewModel.fetchTodos(true)
                 }
             }
 
@@ -134,5 +138,9 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
                 }
             }
         })
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
