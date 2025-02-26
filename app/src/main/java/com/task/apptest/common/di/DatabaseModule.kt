@@ -2,8 +2,8 @@ package com.task.apptest.common.di
 
 import android.content.Context
 import androidx.room.Room
-import com.task.apptest.data.local.AppDatabase
-import com.task.apptest.data.local.AppDatabase.Companion.DATABASE_NAME
+import com.task.apptest.common.local.AppDatabase
+import com.task.apptest.common.local.AppDatabase.Companion.DATABASE_NAME
 import com.task.apptest.data.local.TodoDao
 import dagger.Module
 import dagger.Provides

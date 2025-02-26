@@ -14,31 +14,33 @@ class TodoRepository @Inject constructor(
     private val todoDao: TodoDao
 ) {
 
-    private suspend fun getTodos(): List<Todo> = withContext(Dispatchers.IO) {
-        val todos = todoDao.getAllTodos().toTodoList()
-        todos
+    suspend fun getTodos(): List<Todo> = withContext(Dispatchers.IO) {
+        return@withContext todoDao.getAllTodos().toTodoList()
     }
 
     suspend fun fetchAndStoreTodos(): List<Todo> {
         return withContext(Dispatchers.IO) {
-            val response = apiService.getTodos()
-            if (response.isSuccessful) {
-                response.body()?.let { todos ->
-                    val entities = todos.map { it.toEntity() }
-                    todoDao.insertTodos(entities)
-                    return@withContext getTodos()
+            try {
+                val response = apiService.getTodos()
+                if (response.isSuccessful) {
+                    response.body()?.let { todos ->
+                        val entities = todos.map { it.toEntity() }
+                        todoDao.insertTodos(entities) // تخزين البيانات الجديدة في Room
+                        return@withContext getTodos()
+                    }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-            return@withContext emptyList()
+            return@withContext getTodos() // في حالة الفشل، نرجع البيانات من Room
         }
     }
 
     suspend fun getTodoById(id: Int): Todo? = withContext(Dispatchers.IO) {
-        val todo = todoDao.getTodoById(id)?.toTodo()
-        todo
+        return@withContext todoDao.getTodoById(id)?.toTodo()
     }
+
     suspend fun searchTodos(query: String): List<Todo> = withContext(Dispatchers.IO) {
-        val results = todoDao.searchTodos(query).toTodoList()
-        results
+        return@withContext todoDao.searchTodos(query).toTodoList()
     }
 }

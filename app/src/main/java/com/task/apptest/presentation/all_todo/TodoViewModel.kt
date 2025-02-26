@@ -8,6 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @HiltViewModel
 class TodoViewModel @Inject constructor(private val repository: TodoRepository) : ViewModel() {
 
@@ -17,10 +18,14 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
     private val _todoDetails = MutableStateFlow<Todo?>(null)
     val todoDetails = _todoDetails.asStateFlow()
 
-    fun fetchTodos() {
+    fun fetchTodos(hasInternet: Boolean) {
         viewModelScope.launch {
-            val storedTodos = repository.fetchAndStoreTodos()
-            _todos.value = storedTodos
+            val cachedTodos = repository.getTodos()
+            _todos.value = cachedTodos
+            if (hasInternet) {
+                val newTodos = repository.fetchAndStoreTodos()
+                _todos.value = newTodos
+            }
         }
     }
 
@@ -29,5 +34,4 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
             _todoDetails.value = repository.getTodoById(id)
         }
     }
-
 }
