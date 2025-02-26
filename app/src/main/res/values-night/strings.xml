@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="todos">Todos</string>
+    <string name="todo_details">Todo Details</string>
+    <string name="search">search</string>
+    <string name="title">Title : </string>
+    <string name="description">Description: </string>
+    <string name="due_date">Due Date: </string>
+    <string name="completed">Completed: </string>
+    <string name="priority">Priority: </string>
+    <string name="no_internet">لا يوجد الانترنيت</string>
+</resources>

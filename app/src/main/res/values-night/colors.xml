@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="blue_light">#94E2DB</color>
+    <color name="background_appbar">#FAFEFF</color>
+    <color name="gray">#757474</color>
+</resources>
