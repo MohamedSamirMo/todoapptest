@@ -21,6 +21,7 @@ navigationSafeArgsGradlePlugin = "2.8.7"
 retrofit = "2.11.0"
 roomRuntime = "2.6.1"
 sdpAndroid = "1.1.1"
+shimmer = "0.5.0"
 sspAndroid = "1.1.1"
 
 [libraries]
@@ -51,6 +52,7 @@ androidx-activity = { group = "androidx.activity", name = "activity", version.re
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 sdp-android = { module = "com.intuit.sdp:sdp-android", version.ref = "sdpAndroid" }
+shimmer = { module = "com.facebook.shimmer:shimmer", version.ref = "shimmer" }
 ssp-android = { module = "com.intuit.ssp:ssp-android", version.ref = "sspAndroid" }
 
 [plugins]
