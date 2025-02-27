@@ -20,7 +20,7 @@ class TodoViewModel @Inject constructor(private val repository: TodoRepository) 
     val todoDetails = _todoDetails.asStateFlow()
 
     private var page = 1
-    private val pageSize = 5
+    private val pageSize = 2
 
     fun fetchTodos(hasInternet: Boolean) {
         viewModelScope.launch {

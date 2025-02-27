@@ -62,10 +62,6 @@ dependencies {
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
 
-    // Coroutines test library
-    testImplementation (libs.kotlinx.coroutines.test)
-    // LiveData test utilities
-    testImplementation (libs.androidx.core.testing)
     implementation (libs.androidx.room.runtime)
 
     implementation(libs.androidx.room.runtime)

@@ -27,7 +27,15 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
 
     private val viewModel: TodoViewModel by viewModels()
     private lateinit var todoAdapter: TodoAdapter
-
+    private val scrollListener = object : RecyclerView.OnScrollListener() {
+        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+            super.onScrolled(recyclerView, dx, dy)
+            val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+            if (layoutManager.findLastVisibleItemPosition() == todoAdapter.itemCount - 1) {
+                viewModel.fetchTodos(isInternetAvailable(requireContext()))
+            }
+        }
+    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentTodoBinding.bind(view)
@@ -60,15 +68,7 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
         binding.rvTodos.apply {
             this.layoutManager = layoutManager
             adapter = todoAdapter
-
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    if (layoutManager.findLastVisibleItemPosition() == todoAdapter.itemCount - 1) {
-                        viewModel.fetchTodos(isInternetAvailable(requireContext()))
-                    }
-                }
-            })
+            addOnScrollListener(scrollListener)
         }
 
         todoAdapter.setOnItemClickListener { todo ->
@@ -97,7 +97,7 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
     private fun bindAppBar() {
         binding.appBar.tvScreenTitle.text = getString(R.string.todos)
         binding.appBar.btnBack.setOnClickListener {
-            findNavController().popBackStack()
+            activity?.finish()
         }
         binding.appBar.btnSearch.setOnClickListener {
             findNavController().navigate(R.id.action_todoFragment_to_searchFragment)

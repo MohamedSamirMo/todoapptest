@@ -17,8 +17,10 @@ class TodoRepository @Inject constructor(
         val startIndex = (page - 1) * pageSize
         todoDao.getAllTodos()
             .toTodoList()
+            .asSequence()
             .drop(startIndex)
             .take(pageSize)
+            .toList()
     }
     suspend fun fetchAndStoreTodos(page: Int, pageSize: Int): List<Todo> {
         return withContext(Dispatchers.IO) {
@@ -28,7 +30,7 @@ class TodoRepository @Inject constructor(
                     response.body()?.let { todos ->
                         val entities = todos.map { it.toEntity() }
                         todoDao.insertTodos(entities)
-                        return@withContext getTodos(page, pageSize)  // جلب التو-دوس من القاعدة بعد التخزين
+                        return@withContext getTodos(page, pageSize)
                     }
                 }
             } catch (e: Exception) {

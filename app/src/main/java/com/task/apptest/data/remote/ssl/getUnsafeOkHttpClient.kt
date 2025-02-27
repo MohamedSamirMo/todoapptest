@@ -7,7 +7,6 @@ import javax.net.ssl.*
 
 fun getUnsafeOkHttpClient(): OkHttpClient {
     try {
-        // تعطيل التحقق من الشهادات
         val trustAllCertificates = arrayOf<TrustManager>(object : X509TrustManager {
             override fun checkClientTrusted(chain: Array<X509Certificate>?, authType: String?) {}
             override fun checkServerTrusted(chain: Array<X509Certificate>?, authType: String?) {}

@@ -16,7 +16,7 @@
         android:padding="@dimen/_12sdp">
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="@dimen/_50sdp"
+            android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:background="@android:color/darker_gray"
             android:textSize="@dimen/_13ssp"
@@ -45,7 +45,7 @@
             android:background="@android:color/darker_gray" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="@dimen/_50sdp"
+            android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@android:color/darker_gray"
@@ -60,7 +60,7 @@
             android:background="@android:color/darker_gray" />
 
         <com.google.android.material.textview.MaterialTextView
-            android:layout_width="@dimen/_50sdp"
+            android:layout_width="@dimen/_70sdp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@android:color/darker_gray"
