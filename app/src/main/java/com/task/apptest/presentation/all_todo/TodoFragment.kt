@@ -143,4 +143,11 @@ class TodoFragment : Fragment(R.layout.fragment_todo) {
         super.onDestroyView()
         _binding = null
     }
+    override fun onResume() {
+        super.onResume()
+        if (isInternetAvailable(requireContext())) {
+            viewModel.fetchTodos(true)
+        }
+    }
+
 }
